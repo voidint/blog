@@ -1,0 +1,125 @@
+{
+  "posts": [
+    {
+      "content": "### 场景描述\n假设你创建了一个文件，并写入了一些内容，然后通过git add和git commit将此变更提交。提交之后才发现这个文件中少了一些内容，此时有两个选择摆在你面前：\n\n- 将文件内容补全，然后和之前一样git add、git commit。显然，你可以通过git log看到这两条commit记录。\n- 回到过去，修改上一次提交的那个文件。如此一来，你的commit记录只会有一条。对于一些有代码洁癖并且看中git commit记录的程序员，这点很重要，特别是在开源项目中。\n\n### 场景再现\n初始化git仓库\n\n```shell\n$ mkdir test && cd test && git init\n```\n\n第一次commit内容\n\n```shell\n$ echo 'Hello world' > README.md\n$ git add .\n$ git commit -m \"Add README.md\"\n$ git log --oneline\nc56f680 Add README.md\n```\n\n修改文件内容并合并到上一次的commit变更当中\n\n```shell\n$ echo 'Hello voidint' >> README.md\n$ git add .\n$ git commit --amend --no-edit\n$ git log --oneline\neb6c8cb Add README.md // hash值发生了变化\n```\n\n可以看到，在执行git commit --amend --no-edit之后，hash值由c56f680变成了eb6c8cb，但是message内容并没有发生变化，并且最重要的是只有一条commit记录。\n\n如果要修改上一条的message，那么去掉--no-edit选项即可，git commit --amend -m \"xxxx\"。同理，commit记录同样只会有一条。",
+      "data": {
+        "title": "git commit message后悔药",
+        "date": "2020-02-25 16:33:19",
+        "tags": [
+          "git"
+        ],
+        "published": true,
+        "hideInList": false,
+        "feature": "/post-images/git-commit-amend.jpg",
+        "isTop": false
+      },
+      "isEmpty": false,
+      "excerpt": "",
+      "abstract": "",
+      "fileName": "git-commit-amend"
+    },
+    {
+      "content": "从docker hub拉取的MySQL官方docker镜像，启动MySQL容器后，执行`select now()`语句，发现显示的时间与我宿主机的时间不一致且相差8小时。显然，需要重置MySQL的时区，将时区设置与宿主机保持一致，即东八区。\n\n### 如何为MySQL设置时区？\n[MySQL 5.7官方文档](https://dev.mysql.com/doc/refman/5.7/en/time-zone-support.html)中提到了多种设置时区的方案，我们这里仅关注配置文件（MySQL官方称之为[Option Files](https://dev.mysql.com/doc/refman/5.7/en/option-files.html)）的方案。\n\n#### 配置文件中修改时区\n- 配置项default-time-zone及取值\n    依据文档可以通过在配置文件中增加default-time-zone='timezone'的配置项来修改时区。配置值的取值遵循以下规则：\n\n    >- The value 'SYSTEM' indicates that the time zone should be the same as the system time zone.\n    >\n    >- The value can be given as a string indicating an offset from UTC, such as '+10:00' or '-6:00'.\n    >\n    >- The value can be given as a named time zone, such as 'Europe/Helsinki', 'US/Eastern', or 'MET'. Named time zones can be used only if the time zone information tables in the mysql database have been created and populated.\n\n    我们选择第二种方式，通过UTC的偏移量来表示东八区，+8:00意味着在零时区的基础上往东偏移8个时区。\n- group\n    官方文档中描述了配置文件的语法，包括注释、组、选项名、选项值等。其中组（group）是与我们当前遇到的问题息息相关的东西。配置项需要放置在正确的group下，官方表述如下：\n\n    > If an option group name is the same as a program name, options in the group apply specifically to that program.\n    > For example, the [mysqld] and [mysql] groups apply to the mysqld server and the mysql client program, respectively.\n\n由于配置项default-time-zone是为了让MySQL Server调整默认时区，并结合上面有关group的表述，不难得出一个结论：default-time-zone配置项应该放置在名为[mysqld]的group下。\n\n```shell\n[mysqld]\ndefault-time_zone = '+8:00'\n```\n\n#### 配置文件位置\n既然已经明确了通过修改配置文件来达到重置MySQL时区的目的，那么修改后的配置文件放哪儿呢？这是首先面临的一个问题。好在MySQL官方文档中已经告诉我们配置文件的读取顺序。\n\n| **File Name**       | **Purpose**                                     |\n| ------------------- | ----------------------------------------------- |\n| /etc/my.cnf         | Global options                                  |\n| /etc/mysql/my.cnf   | Global options                                  |\n| *SYSCONFDIR*/my.cnf | Global options                                  |\n| $MYSQL_HOME/my.cnf  | Server-specific options (server only)           |\n| defaults-extra-file | The file specified with `--defaults-extra-file` |\n| ~/.my.cnf           | User-specific options                           |\n| ~/.mylogin.cnf      | User-specific login path options (clients only) |\n\n再尝试查看MySQL的docker容器中的配置文件，docker run --rm mysql:5.7 cat /etc/mysql/my.cnf，我们看到了容器中的配置文件内容如下：\n\n```\n# Copyright (c) 2016, Oracle and/or its affiliates. All rights reserved.\n#\n# This program is free software; you can redistribute it and/or modify\n# it under the terms of the GNU General Public License as published by\n# the Free Software Foundation; version 2 of the License.\n#\n# This program is distributed in the hope that it will be useful,\n# but WITHOUT ANY WARRANTY; without even the implied warranty of\n# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n# GNU General Public License for more details.\n#\n# You should have received a copy of the GNU General Public License\n# along with this program; if not, write to the Free Software\n# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA\n\n!includedir /etc/mysql/conf.d/\n!includedir /etc/mysql/mysql.conf.d/\n```\n\n\n这下这个疑问终于有了答案，我们可以将自定义的配置文件想办法放入容器中的/etc/mysql/conf.d/目录（放在/etc/mysql/mysql.conf.d/目录当然也同样OK）。\n\n注意：在*nix系统下使用!includedir指令指定的配置文件目录下的配置文件扩展名必须是.cnf，在Windows系统下的扩展名可以是.ini或者.cnf。\n\n#### 启动MySQL容器\n\n```shell\n$ docker run  -d --name mysql5.7 \\\n    -v /Users/voidint/dockerV/mysql/5.7/conf:/etc/mysql/conf.d \\\n    -e MYSQL_ROOT_PASSWORD='abc#123' \\\n    -p 3306:3306\\\n    mysql:5.7\n```\n\n参考MySQL官方docker镜像的说明，我们将上面步骤准备好的MySQL配置文件放置在/Users/voidint/dockerV/mysql/5.7/conf目录下，并通过docker -v选项将宿主机上的配置文件目录挂载到容器中的/etc/mysql/conf.d目录。这样在容器启动时就能读取到我们自定义的配置文件，时区配置也就生效了。\n\n容器启动后，通过MySQL客户端连接上MySQL，再次执行select now()语句以验证MySQL的时区是否与宿主机时区保持一致。\n\n### 参考\n- [MySQL Server Time Zone Support](https://dev.mysql.com/doc/refman/5.7/en/time-zone-support.html)\n- [Using Option Files](https://dev.mysql.com/doc/refman/5.7/en/option-files.html)\n- [MySQL Docker镜像](https://hub.docker.com/_/mysql)\n\n\n\n\n",
+      "data": {
+        "title": "容器内MySQL时区调整",
+        "date": "2020-02-25 16:08:07",
+        "tags": [
+          "MySQL",
+          "timezone",
+          "docker"
+        ],
+        "published": true,
+        "hideInList": false,
+        "feature": "/post-images/mysql-timezone.jpg",
+        "isTop": false
+      },
+      "isEmpty": false,
+      "excerpt": "",
+      "abstract": "",
+      "fileName": "mysql-timezone"
+    },
+    {
+      "content": "我在自己的mac上安装了docker，并在docker中运行了mysql5.6容器。启动容器的方式大致如下：\n```shell\n$ docker run --name mydb -d -p 3306:3306 -v /Users/voidint/dockerV/mysql/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=xxxxx mysql:5.6\n```\n\nmysql服务正常启动之后，我想通过客户端连接此服务。于是，我顺理成章地在终端敲下了这样的命令\n```shell\n$ mysql -u root -p\nEnter password:\nERROR 2002 (HY000): Can't connect to local MySQL server through socket '/tmp/mysql.sock' (2)\n```\n\n非常意外，居然报错了。我记得以前都是这样敲的呀？怎么换成跑在docker里就行不通了？不科学！\n\n```shell\n$ mysql -h localhost -uroot -p\nEnter password:\nERROR 2002 (HY000): Can't connect to local MySQL server through socket '/tmp/mysql.sock' (2)\n```\n\n加上`-h`选项还是不行，气急败坏。气归气，问题还是要解决的，那就查查资料。然后，看到了这篇，在粗粗浏览过之后，发现有人建议用`-h 127.0.0.1`。\n\n```shell \n$ mysql -h 127.0.0.1 -u root -p \nEnter password:\nReading table information for completion of table and column names\nYou can turn off this feature to get a quicker startup with -A\n\nWelcome to the MySQL monitor.  Commands end with ; or \\g.\nYour MySQL connection id is 3823\nServer version: 5.6.35 MySQL Community Server (GPL)\n\nCopyright (c) 2000, 2015, Oracle and/or its affiliates. All rights reserved.\n\nOracle is a registered trademark of Oracle Corporation and/or its\naffiliates. Other names may be trademarks of their respective\nowners.\n\nType 'help;' or '\\h' for help. Type '\\c' to clear the current input statement.\n\nmysql>\n```\n\n试过之后，发现效果立竿见影。这简直颠覆了我的既有观念！\n\n- 难道localhost和127.0.0.1不是同一个东西？OMG！\n- 那个socket文件/tmp/mysql.sock又是怎么一回事，指定了127.0.0.1怎么就正常了？\n\n在查阅了一些资料之后，终于对于这几个问题有了稍深入的理解：\n\n### localhost和127.0.0.1的区别\n- localhost和127.0.0.1，前者是域名，后者是IP地址中特殊的一类回还地址。\n- 许多时候localhost和127.0.0.1给人感觉是等价的，是由于在多数系统的/etc/hosts文件中，两者存在映射关系。\n- 本机上的服务，如果通过localhost访问，可以不经过网卡，并且不受防火墙的限制。如果不经过网卡，那客户端和服务端要如何通信？答案就是socket。比如上面例子中的/tmp/mysql.sock。也因为不需要经过网卡，不需要TCP/IP协议的层层封包和层层解包过程，性能上会更出色一些。\n- 本机上的服务，如果通过127.0.0.1访问，需要经过网卡，也可能受到防火墙限制。\n\n### 参考资料\n- https://hub.docker.com/_/mysql/\n- http://stackoverflow.com/questions/11657829/error-2002-hy000-cant-connect-to-local-mysql-server-through-socket-var-run\n- http://blog.onlycatch.com/post/7e371ca28621\n- http://i.joymvp.com/%E6%8A%80%E6%9C%AF/routing-traffic-localhost.html\n",
+      "data": {
+        "title": "为什么mysql -h localhost无法登录了？",
+        "date": "2020-02-25 15:56:49",
+        "tags": [
+          "MySQL",
+          "localhost"
+        ],
+        "published": true,
+        "hideInList": false,
+        "feature": "/post-images/mysql-login-localhost.png",
+        "isTop": false
+      },
+      "isEmpty": false,
+      "excerpt": "",
+      "abstract": "",
+      "fileName": "mysql-login-localhost"
+    }
+  ],
+  "tags": [
+    {
+      "name": "git",
+      "slug": "JFSNzrvJI",
+      "used": true
+    },
+    {
+      "name": "timezone",
+      "slug": "r6k_9Mi2R",
+      "used": true
+    },
+    {
+      "name": "docker",
+      "slug": "EBKzSjP46S",
+      "used": true
+    },
+    {
+      "name": "MySQL",
+      "slug": "upBZVsJSS",
+      "used": true
+    },
+    {
+      "name": "localhost",
+      "slug": "y6nbpIRFho",
+      "used": true
+    },
+    {
+      "name": "linux",
+      "slug": "qFpL6WSF3",
+      "used": false
+    },
+    {
+      "name": "namespaces",
+      "slug": "gX1A_Kwp4f",
+      "used": false
+    },
+    {
+      "name": "Gridea",
+      "slug": "7dumky1lK",
+      "used": false
+    }
+  ],
+  "menus": [
+    {
+      "link": "/",
+      "name": "首页",
+      "openType": "Internal"
+    },
+    {
+      "link": "/archives",
+      "name": "归档",
+      "openType": "Internal"
+    },
+    {
+      "link": "/tags",
+      "name": "标签",
+      "openType": "Internal"
+    },
+    {
+      "link": "/post/about",
+      "name": "关于",
+      "openType": "Internal"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "config": {
+    "archivesPageSize": 50,
+    "archivesPath": "archives",
+    "dateFormat": "YYYY-MM-DD",
+    "feedCount": 10,
+    "feedFullText": true,
+    "footerInfo": "Powered by <a href=\"https://github.com/getgridea/gridea\" target=\"_blank\">Gridea</a>",
+    "postPageSize": 10,
+    "postPath": "post",
+    "postUrlFormat": "SLUG",
+    "showFeatureImage": true,
+    "siteDescription": "身未动，心已远。",
+    "siteName": "voidint",
+    "tagPath": "tag",
+    "tagUrlFormat": "SHORT_ID",
+    "themeName": "gridea-theme-lemon"
+  },
+  "customConfig": {
+    "facebook": "",
+    "ga": "",
+    "github": "https://github.com/voidint",
+    "notice": "",
+    "twitter": "",
+    "weibo": "https://weibo.com/voidinteger/home"
+  }
+}
