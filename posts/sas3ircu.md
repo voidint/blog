@@ -7,11 +7,11 @@ hideInList: false
 feature: /post-images/sas3ircu.jpg
 isTop: false
 ---
-### 适用的controller
+# 适用的controller
 - LSISAS3008
 - LSISAS3004
 
-### 名词解释
+# 名词解释
 - Controller:
 - IR:
 - Volume: 卷，基于物理驱动器通过创建冗余磁盘阵列所生成的虚拟磁盘。概念上等同于RAID冗余磁盘阵列。
@@ -22,24 +22,24 @@ isTop: false
 - SAS: 序列式SCSI（SAS：Serial Attached SCSI）是一种电脑集线的技术，其功能主要是作为周边零件的数据传输，例如：硬盘、CD-ROM等设备而设计的界面。
 - SATA: 串行ATA（Serial ATA: Serial Advanced Technology Attachment）是一种电脑总线，负责主板和大容量存储设备（如硬盘及光盘驱动器）之间的数据传输，主要用于个人电脑。
 
-### 语法
+# 语法
 ```
 sas3ircu <controller_#> <command> <parameters>
 ```
 
-### 通用参数
+# 通用参数
 - <controller_#>
     controller编号是程序分配给PCI插槽上的RAID硬件的唯一编号。比如，某个设备上包含2块LSI SAS3008的RAID卡，那么编号0就代表这第一块RAID卡，而编号1就指代另一块。这个编号的取值范围是0~255之间的整数。
 
 - <Enclosure:Bay>
     由硬盘盒编号(Enclosure)和插槽编号(Bay/Slot)组成的物理驱动器唯一标识。通过DISPLAY命令可以查看到此信息。
 
-### 退出码
+# 退出码
 - 0: 命令执行成功。
 - 1: 错误的命令行参数或者操作失败。
 - 2: 未发现指定的adapter。
 
-### CREATE命令
+# CREATE命令
 创建volume须准守以下规则:
 
 - 组成一个volume的多块磁盘，包括卷的热备盘在内，都必须是在同一个controller上。
@@ -53,11 +53,11 @@ sas3ircu <controller_#> <command> <parameters>
 - 每个controller上能创建1个或者2个hot spare disk。
 - 不允许跨SAS、SATA物理驱动器创建volume。
 - 不允许跨普通硬盘和固态硬盘创建volume。
-#### 语法
+## 语法
 ```
 sas3ircu <controller_#> create <volume_type> <size> {<Enclosure:Bay>} [VolumeName] [noprompt]
 ```
-#### 参数
+## 参数
 - <controller_#>: controller编号。
 - <volume_type>: volume类型。等价于RAID级别。可选值包括RAID0、RAID1、RAID1E、RAID10。
 - <size>: volume的容量大小，单位MB。MAX代表可用的最大容量值。
@@ -65,40 +65,40 @@ sas3ircu <controller_#> create <volume_type> <size> {<Enclosure:Bay>} [VolumeNam
 - [VolumeName]: 可选，volume名称。
 - [noprompt]: 可选，阻止在命令运行过程中产生的警告和交互式提示，即静默运行。
 
-### DELETE命令
+# DELETE命令
 该命令用于删除指定controller下的所有的volume及其hot spare drives，但并不会对其它controller的配置参数产生任何影响。
-#### 语法
+## 语法
 ```
 sas3ircu <controller_#> delete [noprompt]
 ```
-#### 参数
+## 参数
 - <controller_#>: controller编号。
 - [noprompt]: 可选，阻止在命令运行过程中产生的警告和交互式提示，即静默运行。
 
-### DELETEVOLUME命令
+# DELETEVOLUME命令
 该命令用于删除指定controller下的指定volume及其hot spare drives，但并不会对其它controller的配置参数产生任何影响。如果某个hot spare对于剩余还未被删除的volume而言是不合适的，那么这个hot spare也会被删除。
-#### 语法
+## 语法
 ```
 sas3ircu <controller_#> deletevolume <volumeID> [noprompt]
 ```
-#### 参数
+## 参数
 - <controller_#>: controller编号。
 - <volumeID>: 待删除的volume ID。通过STATUS或者DISPLAY命令可以查看到volume ID相关的信息。
 - [noprompt]: 可选，阻止在命令运行过程中产生的警告和交互式提示，即静默运行。
 
-### DISPLAY命令
+# DISPLAY命令
 该命令用于显示LSI SAS3 controller相关的配置信息，包括controller类型、固件版本、BIOS版本、volume信息、物理驱动器信息，以及enclosure。
 
-#### 语法
+## 语法
 ```
 sas3ircu <controller_#> display [filename]
 ```
 
-#### 参数
+## 参数
 - <controller_#>: controller编号。
 - [filename]: 可选，用于存储该命令输出的文件。
 
-#### 命令输出样例
+## 命令输出样例
 ```
 Avago Technologies SAS3 IR Configuration Utility.
 Version 15.00.00.00 (2016.11.21) 
@@ -226,7 +226,7 @@ SAS3IRCU: Utility Completed Successfully.
     - SAS: 物理驱动器支持SAS协议。
     - SATA: 物理驱动器支持SATA协议。
 
-### HOTSPARE命令
+# HOTSPARE命令
 该命令用来给热备池中添加或者删除一个物理驱动器。待添加的物理驱动器存储容量不能小于volume中各个物理驱动器存储容量最小的那个物理驱动器的存储容量。若想要确定各个物理驱动器的存储容量等信息，请参考DISPLAY命令。
 
 创建热备盘时须准守以下规则:
@@ -237,34 +237,34 @@ SAS3IRCU: Utility Completed Successfully.
 - 每个controller最多添加2块热备盘。
 - SSD可以作为HDD类型的volume的热备盘，HDD不可以作为SSD类型volume的热备盘。
 
-#### 语法
+## 语法
 ```
 sas3ircu <controller_#> hotspare [delete] <Enclosure:Bay>
 ```
 
-#### 参数
+## 参数
 - <controller_#>: controller编号。
 - <Enclosure:Bay>: 硬盘盒编号+物理驱动器编号，可以唯一标识一块物理驱动器。
 - [delete]: 可选。加上此参数意味着执行的是删除热备盘的操作，反之，则是添加热备盘操作。
 
-### STATUS命令
+# STATUS命令
 该命令会显示当前已经存在volume，以及当前还在进行中的操作的状态。
 
-#### 语法
+## 语法
 ```
 sas3ircu <controller_#> status
 ```
 
-#### 参数
+## 参数
 - <controller_#>: controller编号。
 
-### LIST命令
+# LIST命令
 该命令显示当前系统中的所有controller及其controller index组成的列表。
 
-#### 语法
+## 语法
 sas3ircu list
 
-### 参考
+# 参考
 - [SAS-3 Integrated RAID Configuration Utility (SAS3IRCU)](https://docs.broadcom.com/docs/12353382)
 - [LSI SAS3008文档](https://support.huawei.com/enterprise/zh/doc/EDOC1000004345/b4b05091#it_server_sas3008_700035)
 - [Disk Enclosure](https://zh.wikipedia.org/wiki/%E7%A1%AC%E7%9B%98%E7%9B%92)

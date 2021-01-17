@@ -9,10 +9,10 @@ isTop: false
 ---
 从docker hub拉取的MySQL官方docker镜像，启动MySQL容器后，执行`select now()`语句，发现显示的时间与我宿主机的时间不一致且相差8小时。显然，需要重置MySQL的时区，将时区设置与宿主机保持一致，即东八区。
 
-### 如何为MySQL设置时区？
+# 如何为MySQL设置时区？
 [MySQL 5.7官方文档](https://dev.mysql.com/doc/refman/5.7/en/time-zone-support.html)中提到了多种设置时区的方案，我们这里仅关注配置文件（MySQL官方称之为[Option Files](https://dev.mysql.com/doc/refman/5.7/en/option-files.html)）的方案。
 
-#### 配置文件中修改时区
+## 配置文件中修改时区
 - 配置项default-time-zone及取值
     依据文档可以通过在配置文件中增加default-time-zone='timezone'的配置项来修改时区。配置值的取值遵循以下规则：
 
@@ -36,7 +36,7 @@ isTop: false
 default-time_zone = '+8:00'
 ```
 
-#### 配置文件位置
+## 配置文件位置
 既然已经明确了通过修改配置文件来达到重置MySQL时区的目的，那么修改后的配置文件放哪儿呢？这是首先面临的一个问题。好在MySQL官方文档中已经告诉我们配置文件的读取顺序。
 
 | **File Name**       | **Purpose**                                     |
@@ -76,7 +76,7 @@ default-time_zone = '+8:00'
 
 注意：在*nix系统下使用!includedir指令指定的配置文件目录下的配置文件扩展名必须是.cnf，在Windows系统下的扩展名可以是.ini或者.cnf。
 
-#### 启动MySQL容器
+## 启动MySQL容器
 
 ```shell
 $ docker run  -d --name mysql5.7 \
@@ -90,11 +90,7 @@ $ docker run  -d --name mysql5.7 \
 
 容器启动后，通过MySQL客户端连接上MySQL，再次执行select now()语句以验证MySQL的时区是否与宿主机时区保持一致。
 
-### 参考
+# 参考
 - [MySQL Server Time Zone Support](https://dev.mysql.com/doc/refman/5.7/en/time-zone-support.html)
 - [Using Option Files](https://dev.mysql.com/doc/refman/5.7/en/option-files.html)
 - [MySQL Docker镜像](https://hub.docker.com/_/mysql)
-
-
-
-

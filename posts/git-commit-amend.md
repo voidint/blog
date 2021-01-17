@@ -7,13 +7,13 @@ hideInList: false
 feature: /post-images/git-commit-amend.jpg
 isTop: false
 ---
-### 场景描述
+# 场景描述
 假设你创建了一个文件，并写入了一些内容，然后通过git add和git commit将此变更提交。提交之后才发现这个文件中少了一些内容，此时有两个选择摆在你面前：
 
 - 将文件内容补全，然后和之前一样git add、git commit。显然，你可以通过git log看到这两条commit记录。
 - 回到过去，修改上一次提交的那个文件。如此一来，你的commit记录只会有一条。对于一些有代码洁癖并且看中git commit记录的程序员，这点很重要，特别是在开源项目中。
 
-### 场景再现
+# 场景再现
 初始化git仓库
 
 ```shell
