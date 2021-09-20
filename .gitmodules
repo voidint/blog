@@ -1,0 +1,9 @@
+[submodule "themes/contrast-hugo"]
+    path = themes/contrast-hugo
+    url = git@github.com:niklasbuschmann/contrast-hugo.git
+[submodule "themes/the-roots-home"]
+    path = themes/the-roots-home
+    url = git@github.com:rmsubekti/the-roots-home.git
+[submodule "themes/jane"]
+    path = themes/jane
+    url = git@github.com:xianmin/hugo-theme-jane.git
