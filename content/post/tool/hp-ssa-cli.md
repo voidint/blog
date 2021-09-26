@@ -2,7 +2,7 @@
 title: "Linux下hpssacli配置 HP Smart Array"
 date: 2020-02-25 17:05:06
 tags: [RAID,HPSSACLI]
-categories: ["硬件"]
+categories: ["工具箱"]
 draft: true
 ---
 

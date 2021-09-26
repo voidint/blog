@@ -2,7 +2,7 @@
 title: "为什么mysql -h localhost无法登录了？"
 date: 2020-02-25 15:56:49
 tags: [MySQL,localhost]
-categories: ["MySQL"]
+categories: ["数据库"]
 draft: true
 ---
 

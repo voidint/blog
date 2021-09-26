@@ -2,7 +2,7 @@
 title: "Linux用户登录密码的生成"
 date: 2020-02-25 17:24:33
 tags: [Linux,Password,grub-crypt]
-categories: ["Unix/Linux"]
+categories: ["UNIX/Linux"]
 draft: true
 ---
 

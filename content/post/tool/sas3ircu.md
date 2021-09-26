@@ -2,7 +2,7 @@
 title: "SAS3IRCU配置LSI SAS3系列RAID卡"
 date: 2020-02-25 16:43:06
 tags: [RAID,SAS3IRCU]
-categories: ["硬件"]
+categories: ["工具箱"]
 draft: true
 ---
 
