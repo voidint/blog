@@ -1,7 +1,7 @@
 ---
 title: "socket编程（一）：一个服务器服务一个客户端"
 date: 2021-09-21T10:07:50+08:00
-tags: ["socket编程"]
+tags: ["socket","bind","listen","accept","connect"]
 categories: ["计算机网络"]
 draft: true
 ---
