@@ -6,6 +6,11 @@ categories: ["工具箱"]
 draft: true
 ---
 
+
+> 原文链接：https://voidint.github.io/post/tool/git-commit-amend/
+
+![题图](https://voidint.github.io/tool/git.jpg)
+
 # 场景描述
 假设你创建了一个文件，并写入了一些内容，然后通过git add和git commit将此变更提交。提交之后才发现这个文件中少了一些内容，此时有两个选择摆在你面前：
 

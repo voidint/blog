@@ -6,6 +6,10 @@ categories: ["容器"]
 draft: true
 ---
 
+> 原文链接：https://voidint.github.io/post/container/docker-mysql-timezone/
+
+![题图](https://voidint.github.io/cloudnative/mysql-timezone.jpg)
+
 从docker hub拉取的MySQL官方docker镜像，启动MySQL容器后，执行`select now()`语句，发现显示的时间与我宿主机的时间不一致且相差8小时。显然，需要重置MySQL的时区，将时区设置与宿主机保持一致，即东八区。
 
 # 如何为MySQL设置时区？

@@ -6,6 +6,11 @@ tags: ["gdb", "debug"]
 categories: ["C/C++"]
 ---
 
+> 原文链接：https://voidint.github.io/post/c_cpp/gdb/
+
+![题图](https://voidint.github.io/c_cpp/gdb.gif)
+
+
 gdb 调试前提是需要保留符号表。对于 C/C++ 等使用 gcc 进行编译的语言，编译时增加`-g`选项。对于 go 语言，则增加`-ldflags=-compressdwarf=false` 、`-gcflags=all="-N -l"`等选项。
 
 

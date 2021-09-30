@@ -6,6 +6,10 @@ categories: ["容器"]
 draft: true
 ---
 
+> 原文链接：https://voidint.github.io/post/container/linux-namespaces-first-experience/
+
+![题图](https://voidint.github.io/cloudnative/linux-namespaces-first-experience.png)
+
 # 简介
 
 下面是[酷壳](https://coolshell.cn/articles/17010.html)给出的关于Linux Namespaces的介绍：

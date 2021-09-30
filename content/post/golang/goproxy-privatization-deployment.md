@@ -6,6 +6,11 @@ categories: ["Golang"]
 draft: true
 ---
 
+> 原文链接：https://voidint.github.io/post/golang/goproxy-privatization-deployment/
+
+![题图](https://voidint.github.io/golang/goproxyio.jpg)
+
+
 最近在公司内部搭建了一个[goproxy.io](https://goproxy.io/zh/)的服务，总结并记录一下备忘。
 
 goproxy.io本身已经比较成熟，对部署也非常友好，按照官方的文档一步一步搭建应该都会比较顺利。当然我也不是对官方文档的无意义复制粘贴，我将从以下三个方面进行阐述：

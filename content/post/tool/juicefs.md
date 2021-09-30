@@ -6,7 +6,9 @@ tags: ["juicefs", "网盘"]
 categories: ["工具箱"]
 ---
 
+> 原文链接：https://voidint.github.io/post/tool/juicefs/
 
+![题图](https://voidint.github.io/tool/juicefs.png)
 
 # 什么是JuiceFS
 > JuiceFS 是为云端设计的共享文件系统。

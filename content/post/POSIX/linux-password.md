@@ -6,6 +6,10 @@ categories: ["UNIX/Linux"]
 draft: true
 ---
 
+> 原文链接：https://voidint.github.io/post/posix/linux-password/
+
+![题图](https://voidint.github.io/posix/linux-password.jpg)
+
 # 从自动化需求说起
 
 如何生成一个Linux用户登录密码？可能有人会说用passwd生成。的确，passwd命令能够帮助我们重置用户登录密码，但是这并没有解答如何生成一个Linux用户登录密码的疑问。

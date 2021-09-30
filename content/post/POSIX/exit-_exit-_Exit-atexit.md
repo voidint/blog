@@ -6,6 +6,10 @@ categories: ["UNIX/Linux"]
 draft: true
 ---
 
+> 原文链接：https://voidint.github.io/post/socket/one_server_one_client/
+
+![题图](https://voidint.github.io/posix/exit.png)
+
 使用C/C++语言在UNIX或者Linux系统下编程，应该都会遇到很多的进程退出相关的函数。有些是C标准库提供的函数，有些是系统调用，有些又是某个系统所独有的系统调用或者函数，并且命名上也极为类似，给人眼花缭乱的感觉。
 
 这篇文章尝试去总结下其中常见的那几个系统调用和函数，并通过一个例子来展示下基本用法。

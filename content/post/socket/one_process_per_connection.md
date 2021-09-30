@@ -6,7 +6,10 @@ categories: ["计算机网络"]
 draft: true
 ---
 
+
 > 原文链接：https://voidint.github.io/post/socket/one_process_per_connection/
+
+![题图](https://voidint.github.io/socket/fork_exec_wait.png)
 
 在前一篇文章中，我们实现了一个[仅能服务一个客户端连接的版本](https://voidint.github.io/post/socket/one_server_one_client/)。很明显，它的局限性非常大，仅能服务一个连接的程序在现实中几乎不可能存在的。在本篇中，我们将对其稍作改进，实现一个**用多个进程服务多个客户端连接的增强型版本**。
 
