@@ -6,6 +6,10 @@ categories: ["数据库"]
 draft: true
 ---
 
+> 原文链接：https://voidint.github.io/post/db/mysql-login-localhost/
+
+![题图](https://voidint.github.io/db/localhost.png)
+
 我在自己的mac上安装了docker，并在docker中运行了mysql5.6容器。启动容器的方式大致如下：
 ```shell
 $ docker run --name mydb -d \
