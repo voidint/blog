@@ -6,8 +6,6 @@ categories: ["Golang"]
 draft: true
 ---
 
-> 原文链接：https://voidint.github.io/post/golang/goproxy-privatization-deployment/
-
 ![题图](https://voidint.github.io/golang/goproxyio.jpg)
 
 

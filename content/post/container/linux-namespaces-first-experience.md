@@ -6,8 +6,6 @@ categories: ["容器"]
 draft: true
 ---
 
-> 原文链接：https://voidint.github.io/post/container/linux-namespaces-first-experience/
-
 ![题图](https://voidint.github.io/cloudnative/linux-namespaces-first-experience.png)
 
 # 简介

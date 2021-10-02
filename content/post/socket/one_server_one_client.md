@@ -6,8 +6,6 @@ categories: ["计算机网络"]
 draft: true
 ---
 
-> 原文链接：https://voidint.github.io/post/socket/one_server_one_client/
-
 ![题图](https://voidint.github.io/socket/socket_api.png)
 
 在这个信息爆炸的时代，有关socket编程的文章多如牛毛，而且还在不断产出，隔三差五就能在各种微信公众号之类的地方看到。我也打算写一个有关 socket 编程的系列文章，不是因为我膨胀到觉得比别人写得好，而是为了加深对这部分知识的印象，查漏补缺（下笔之前总会多查些资料，以免写出来贻笑大方是不是），同时也是为了练习书面表达能力。鉴于本人有限的知识水平和写作水平，错误也在所难免，还望指正。

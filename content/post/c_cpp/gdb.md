@@ -6,8 +6,6 @@ tags: ["gdb", "debug"]
 categories: ["C/C++"]
 ---
 
-> 原文链接：https://voidint.github.io/post/c_cpp/gdb/
-
 ![题图](https://voidint.github.io/c_cpp/gdb.gif)
 
 

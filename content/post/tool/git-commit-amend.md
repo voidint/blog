@@ -7,8 +7,6 @@ draft: true
 ---
 
 
-> 原文链接：https://voidint.github.io/post/tool/git-commit-amend/
-
 ![题图](https://voidint.github.io/tool/git.jpg)
 
 # 场景描述

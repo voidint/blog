@@ -6,6 +6,8 @@ categories: ["工具箱"]
 draft: true
 ---
 
+![题图](https://voidint.github.io/tool/hp-ssa-cli.jpg)
+
 # 什么是HP SSA CLI
 HP Smart Storage Administrator Command Line
 

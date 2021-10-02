@@ -6,6 +6,8 @@ categories: ["工具箱"]
 draft: true
 ---
 
+![题图](https://voidint.github.io/tool/sas3ircu.jpg)
+
 # 适用的controller
 - LSISAS3008
 - LSISAS3004
