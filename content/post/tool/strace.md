@@ -6,6 +6,7 @@ categories: ["工具箱"]
 draft: true
 ---
 
+![题图](https://voidint.github.io/tool/strace.png)
 
 **strace** 是什么？维基百科给出的定义如下：
 
