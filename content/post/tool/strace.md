@@ -698,7 +698,7 @@ close(2</dev/pts/1>)                    = 0
 
 # 参考
 
-- [strace 跟踪进程中的系统调用]([6. strace 跟踪进程中的系统调用 — Linux Tools Quick Tutorial (linuxtools-rst.readthedocs.io)](https://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/strace.html))
 - strace(1) — Linux manual page
+- [strace 跟踪进程中的系统调用](https://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/strace.html)
 
 
