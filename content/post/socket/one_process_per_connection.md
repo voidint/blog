@@ -1,6 +1,6 @@
 ---
 title: "socket编程（二）：每个进程服务一个连接"
-date: 2021-09-26T20:11:22+08:00
+date: 2021-10-01T20:11:22+08:00
 tags: ["socket","fork","waitpid","signal"]
 categories: ["计算机网络"]
 draft: true
