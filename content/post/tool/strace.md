@@ -66,8 +66,7 @@ Optional features enabled: stack-trace=libdw stack-demangle m32-mpers mx32-mpers
 # 示例
 ### 1、跟踪程序运行过程中发起的所有的系统调用
 ```shell
-# strace
-strace ls
+# strace ls
 execve("/usr/bin/ls", ["ls"], 0x7ffc202c4e10 /* 29 vars */) = 0
 brk(NULL)                               = 0x55c6f9104000
 arch_prctl(0x3001 /* ARCH_??? */, 0x7ffc285a5640) = -1 EINVAL (Invalid argument)
@@ -590,7 +589,7 @@ int main() {
 加上`-f`选项后，会跟踪子进程中的系统调用，形如`[pid 2600409] xxxxx`。
 
 ```shell
-# # strace -f -e trace=clone,write,getpid ./a.out
+# strace -f -e trace=clone,write,getpid ./a.out
 getpid()                                = 2600408
 write(1, "[2600408]before fork\n", 21[2600408]before fork
 )  = 21
