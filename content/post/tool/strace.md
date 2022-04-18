@@ -1,5 +1,5 @@
 ---
-title: "strace简明教程"
+title: "strace 简明教程"
 date: 2021-10-17T14:01:42+08:00
 tags: [strace]
 categories: ["工具箱"]
