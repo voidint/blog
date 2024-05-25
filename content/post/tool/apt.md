@@ -6,6 +6,8 @@ categories: ["工具箱"]
 draft: true
 ---
 
+![题图](https://voidint.github.io/tool/apt.jpeg)
+
 `APT`是高级包管理工具（`Advanced Package Tool`），是`Debian`包管理系统的一个高级界面，提供了`apt-get` 程序。它提供了可以搜索和管理软件包，以及查询软件包信息的命令行工具，以及访问`libapt-pkg` 库的所有功能的底层接口。
 
 从`Debian Jessie`开始，一些常用的`apt-get`和`apt-cache`命令在新的`apt`程序中有一个等价的形式。这意味着某些流行的命令，例如 apt-get update、apt-get install、apt-get remove、apt-cache search 和 apt-cache show 可以简单地通过 apt 进行调用，比如 apt update、apt install、apt remove、apt search 和 apt show。
