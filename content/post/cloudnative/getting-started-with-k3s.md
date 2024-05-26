@@ -1,5 +1,5 @@
 ---
-title: "K3S入门"
+title: "K3s入门"
 date: 2024-05-26T08:02:29+08:00
 tags: ["k3s","Kubernetes","K8s"]
 categories: ["cloudnative"]
